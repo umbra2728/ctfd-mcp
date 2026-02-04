@@ -7,6 +7,9 @@ from urllib.parse import urlparse
 from dotenv import load_dotenv
 
 
+DEFAULT_USER_AGENT = "ctfd-mcp/0.1 (+https://github.com/)"
+
+
 class ConfigError(Exception):
     """Raised when configuration is missing or invalid."""
 
@@ -22,6 +25,7 @@ class Config:
     read_timeout: float | None = None
     username: str | None = None
     password: str | None = None
+    user_agent: str | None = None
 
     @property
     def auth_header(self) -> dict[str, str]:
@@ -51,6 +55,7 @@ def load_config() -> Config:
     total_timeout = _parse_timeout("CTFD_TIMEOUT")
     connect_timeout = _parse_timeout("CTFD_CONNECT_TIMEOUT")
     read_timeout = _parse_timeout("CTFD_READ_TIMEOUT")
+    user_agent = os.getenv("CTFD_USER_AGENT")
 
     if not base_url:
         raise ConfigError(
@@ -75,6 +80,10 @@ def load_config() -> Config:
             "Set CTFD_TOKEN, CTFD_SESSION or both CTFD_USERNAME/CTFD_PASSWORD."
         )
 
+    user_agent = user_agent.strip() if user_agent else ""
+    if not user_agent:
+        user_agent = DEFAULT_USER_AGENT
+
     return Config(
         base_url.rstrip("/"),
         token.strip() if token else None,
@@ -85,4 +94,5 @@ def load_config() -> Config:
         read_timeout=read_timeout,
         username=username.strip() if username else None,
         password=password.strip() if password else None,
+        user_agent=user_agent,
     )

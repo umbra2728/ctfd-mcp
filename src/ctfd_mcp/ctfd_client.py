@@ -7,7 +7,7 @@ from typing import Any
 
 import httpx
 
-from .config import Config
+from .config import DEFAULT_USER_AGENT, Config
 
 
 class CTFdClientError(Exception):
@@ -45,9 +45,10 @@ class CTFdClient:
                 read=config.read_timeout if config.read_timeout is not None else 15.0,
             )
         # Force h1 and send explicit Accept/UA to reduce chances of HTML/redirect responses.
+        user_agent = (config.user_agent or "").strip() or DEFAULT_USER_AGENT
         headers = {
             "Accept": "application/json",
-            "User-Agent": "ctfd-mcp/0.1 (+https://github.com/)",
+            "User-Agent": user_agent,
             "X-Requested-With": "XMLHttpRequest",
             **config.auth_header,
         }
