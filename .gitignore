@@ -30,3 +30,6 @@ htmlcov/
 
 # OS / editor
 .DS_Store
+
+# Claude
+.claude/

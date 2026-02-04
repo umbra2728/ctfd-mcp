@@ -1,5 +1,6 @@
 # CTFd MCP server (user scope)
 
+![](https://badge.mcpx.dev?type=server 'MCP Server')
 [![GitHub Release](https://img.shields.io/github/v/release/umbra2728/ctfd-mcp?sort=semver)](https://github.com/umbra2728/ctfd-mcp/releases)
 [![License](https://img.shields.io/github/license/umbra2728/ctfd-mcp)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.13%2B-blue)](https://www.python.org/downloads/)
@@ -112,14 +113,14 @@ If something breaks or you have questions, reach out:
 
 ## Testing
 
-- Run `uv run python -m tests.test_ctfd_client` (requires a real `CTFD_URL` plus token or username/password) to exercise challenge fetching/submission flows.
+- Run `uv run pytest`.
 - Timeouts are configurable via env: `CTFD_TIMEOUT` (total), `CTFD_CONNECT_TIMEOUT`, `CTFD_READ_TIMEOUT` (seconds). Defaults are 20s total / 10s connect / 15s read.
 
 ## Development
 
 - Dev dependencies: `uv sync --group dev`
 - Lint/format: `uv run ruff check .` and `uv run ruff format .`
-- Tests: `uv run python -m unittest discover -s tests`
+- Tests: `uv run pytest`
 - Pre-commit: `uv run pre-commit install` (see `CONTRIBUTING.md`)
 
 ## License
